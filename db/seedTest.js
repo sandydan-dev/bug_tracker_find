@@ -29,8 +29,8 @@ const seedTest = async () => {
     console.log("User table created");
 
     // seed the database with dummy data
-    await User.bulkCreate(userData);
-    console.log("User table seeded with dummy data");
+    // await User.bulkCreate(userData);
+    // console.log("User table seeded with dummy data");
 
     process.exit(0); // exit the process
   } catch (error) {

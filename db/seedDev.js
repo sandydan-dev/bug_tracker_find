@@ -23,12 +23,12 @@ const seedDev = async () => {
     console.log("Database connected");
 
     // models sync the dummy data model.sync({force : true}) to the database;
-    await User.sync({ force: true });
+    await User.sync({ force: false }); // true : drop the table if it already exists
     console.log("User table created");
 
     // seed the database with dummy data
-    await User.bulkCreate(userData);
-    console.log("User table seeded with dummy data");
+    // await User.bulkCreate(userData);
+    // console.log("User table seeded with dummy data");
 
     process.exit(0); // exit the process
   } catch (error) {
