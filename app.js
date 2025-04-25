@@ -3,7 +3,19 @@ const app = express();
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
+const { sequelize } = require("./db/init");
+
+sequelize
+  .authenticate()
+  // .then(() => {
+  //   console.log("Connection has been established successfully.");
+  // })
+  // .catch((error) => {
+  //   console.error("Unable to connect to the database:", error);
+  // });
+
 // routes path
+const userRoute = require("./routers/user.router");
 
 // middlewares
 app.use(express.json()); // to get data from body
@@ -17,5 +29,8 @@ app.get("/test", (req, res) => {
 });
 
 // main routes
+
+//todo: user routes
+app.use("/api/v1/users", userRoute);
 
 module.exports = app;

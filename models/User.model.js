@@ -12,21 +12,11 @@ const User = sequelize.define(
     name: {
       type: DataTypes.STRING,
       allowNull: false, // not null constraint
-      validate: {
-        notEmpty: {
-          msg: "Name is required field",
-        },
-      },
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true, // unique constraint
-      validate: {
-        isEmail: {
-          msg: "Must be a valid email address",
-        },
-      },
     },
     password: {
       type: DataTypes.STRING,
@@ -35,7 +25,6 @@ const User = sequelize.define(
     role: {
       type: DataTypes.ENUM("developer", "admin", "qa", "tester", "manager"),
       defaultValue: "developer",
-      allowNull: false,
     },
   },
   {
