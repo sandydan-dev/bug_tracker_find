@@ -48,7 +48,7 @@ const seedDev = async () => {
     await Ticket.sync({ force: false }); // true : drop the table if it already exists
     console.log("Ticket table created successfully...");
 
-    await TicketAssignment.sync({ force: true }); // true : drop the table if it already exists
+    await TicketAssignment.sync({ force: false }); // true : drop the table if it already exists
     console.log("TicketAssignment table created successfully...");
 
     process.exit(0); // exit the process

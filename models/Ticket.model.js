@@ -92,6 +92,9 @@ Ticket.associate = (models) => {
   Ticket.belongsTo(models.User, { foreignKey: "createdBy" });
   // each ticket is assigned to one user
   Ticket.belongsTo(models.User, { foreignKey: "assignedTo" });
+
+  // Each ticket can have many comments
+  Ticket.hasMany(models.Comment, { foreignKey: "ticketId" });
 };
 
 module.exports = Ticket;

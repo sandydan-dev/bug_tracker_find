@@ -51,8 +51,7 @@ Comment.associate = (models) => {
   //
   Comment.belongsTo(models.User, { foreignKey: "userId" });
 
-  // attachments belong to one comment
-  Comment.hasMany(models.Attachment, { foreignKey: "commentId" });
+
 };
 
 module.exports = Comment;

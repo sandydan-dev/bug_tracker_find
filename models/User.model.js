@@ -41,6 +41,9 @@ User.associate = (models) => {
   User.hasMany(models.Ticket, { foreignKey: "createdBy" });
   // One user can have many tickets assignedTo, as well as be assigned to many tickets
   User.hasMany(models.Ticket, { foreignKey: "assignedTo" });
+
+   // A user can have many comments
+   User.hasMany(models.Comment, { foreignKey: "userId" });
 };
 
 module.exports = User;
