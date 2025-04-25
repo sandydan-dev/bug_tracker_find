@@ -35,20 +35,12 @@ const User = sequelize.define(
 
 // association
 User.associate = (models) => {
+  // TicketAssignments belong to one user
+  User.hasMany(models.TicketAssignment, { foreignKey: "userId" });
   // One user can have many tickets createdBy
   User.hasMany(models.Ticket, { foreignKey: "createdBy" });
   // One user can have many tickets assignedTo, as well as be assigned to many tickets
   User.hasMany(models.Ticket, { foreignKey: "assignedTo" });
-  // Comments belong to one user
-  User.hasMany(models.Comment, { foreignKey: "userId" });
-  // Attachments belong to one user
-  User.hasMany(models.Attachment, { foreignKey: "uploadedBy" });
-  // TicketActivities belong to one user
-  User.hasMany(models.TicketActivity, { foreignKey: "userId" });
-  // notifications belong to one user
-  User.hasMany(models.Notification, { foreignKey: "userId" });
-  // TicketAssignments belong to one user
-  User.hasMany(models.TicketAssignment, { foreignKey: "userId" });
 };
 
 module.exports = User;

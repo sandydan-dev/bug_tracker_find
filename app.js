@@ -15,13 +15,15 @@ sequelize
   // });
 
 // routes path
-const userRoute = require("./routers/user.router");
+const userRoute = require("./routers/user.router"); // user routes
+const ticketRoute = require("./routers/ticket.router"); // ticket routes
+const ticketAssignmentRoute = require("./routers/ticketAssignment.router");
 
 // middlewares
 app.use(express.json()); // to get data from body
 app.use(cookieParser()); // to get data from cookies
 app.use(cors()); // to allow cross-origin requests
-app.use(express.urlencoded({ extended: false })); // to get data from form
+app.use(express.urlencoded({ extended: true })); // to get data from form
 
 // test routes
 app.get("/test", (req, res) => {
@@ -32,5 +34,11 @@ app.get("/test", (req, res) => {
 
 //todo: user routes
 app.use("/api/v1/users", userRoute);
+
+//todo: ticket routes
+app.use("/api/v1/ticket", ticketRoute);
+
+//todo: ticket assignment routes
+app.use("/api/v1/ticket_assignment", ticketAssignmentRoute);
 
 module.exports = app;

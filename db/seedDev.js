@@ -1,7 +1,9 @@
 // require the sequelize from init.js
 const { sequelize, connectDB } = require("./init");
 
-const User = require("../models/User.model");
+const User = require("../models/User.model"); // user model
+const Ticket = require("../models/Ticket.model"); // ticket model
+const TicketAssignment = require("../models/TicketAssignment.model");
 
 // dummy data for models
 const userData = [
@@ -43,9 +45,11 @@ const seedDev = async () => {
     await User.sync({ force: false }); // true : drop the table if it already exists
     console.log("User table created successfully...");
 
-    // seed the database with dummy data
-    // await User.bulkCreate(userData);
-    // console.log("User table seeded with dummy data");
+    await Ticket.sync({ force: false }); // true : drop the table if it already exists
+    console.log("Ticket table created successfully...");
+
+    await TicketAssignment.sync({ force: true }); // true : drop the table if it already exists
+    console.log("TicketAssignment table created successfully...");
 
     process.exit(0); // exit the process
   } catch (error) {

@@ -43,10 +43,10 @@ const TicketAssignment = sequelize.define(
 
 // associations
 TicketAssignment.associate = (models) => {
-  // A ticket can have many users assigned
-  TicketAssignment.belongsTo(models.Ticket, { foreignKey: "ticketId" });
-  // A user can be assigned to many tickets
+  // each ticket assignment belongs to one ticket
   TicketAssignment.belongsTo(models.User, { foreignKey: "userId" });
+  // A user can be assigned to many tickets
+  TicketAssignment.belongsTo(models.Ticket, { foreignKey: "ticketId" });
 };
 
 module.exports = TicketAssignment;
