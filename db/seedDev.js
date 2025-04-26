@@ -3,7 +3,8 @@ const { sequelize, connectDB } = require("./init");
 
 const User = require("../models/User.model"); // user model
 const Ticket = require("../models/Ticket.model"); // ticket model
-const TicketAssignment = require("../models/TicketAssignment.model");
+const TicketAssignment = require("../models/TicketAssignment.model"); // ticket assignment model
+const Comment = require("../models/Comment.model");
 
 // dummy data for models
 const userData = [
@@ -51,6 +52,8 @@ const seedDev = async () => {
     await TicketAssignment.sync({ force: false }); // true : drop the table if it already exists
     console.log("TicketAssignment table created successfully...");
 
+    await Comment.sync({ force: true }); // true : drop the table if it already exists
+    console.log("Comment table created successfully...");
     process.exit(0); // exit the process
   } catch (error) {
     console.log(error);

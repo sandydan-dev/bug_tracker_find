@@ -9,7 +9,6 @@ const Comment = sequelize.define("comment", {
   },
   comment: {
     type: DataTypes.STRING,
-    allowNull: false, // not null constraint
     validate: {
       notEmpty: {
         msg: "Comment is required field",
@@ -19,7 +18,7 @@ const Comment = sequelize.define("comment", {
   ticketId: {
     type: DataTypes.INTEGER,
     references: {
-      model: "ticket",
+      model: "tickets",
       key: "id",
     },
     onDelete: "CASCADE",
@@ -28,7 +27,7 @@ const Comment = sequelize.define("comment", {
   userId: {
     type: DataTypes.INTEGER,
     references: {
-      model: "user",
+      model: "users",
       key: "id",
     },
     onDelete: "CASCADE",

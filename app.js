@@ -16,7 +16,8 @@ sequelize.authenticate();
 // routes path
 const userRoute = require("./routers/user.router"); // user routes
 const ticketRoute = require("./routers/ticket.router"); // ticket routes
-const ticketAssignmentRoute = require("./routers/ticketAssignment.router");
+const ticketAssignmentRoute = require("./routers/ticketAssignment.router"); // ticket assignment routes
+const commentRoute = require("./routers/comment.router"); // comment routes
 
 // middlewares
 app.use(express.json()); // to get data from body
@@ -39,5 +40,8 @@ app.use("/api/v1/ticket", ticketRoute);
 
 //todo: ticket assignment routes
 app.use("/api/v1/ticket_assignment", ticketAssignmentRoute);
+
+//todo: comment routes
+app.use("/api/v1/comment", commentRoute);
 
 module.exports = app;
