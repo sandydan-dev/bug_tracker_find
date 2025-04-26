@@ -2,6 +2,7 @@ const User = require("../models/User.model");
 const Ticket = require("../models/Ticket.model");
 const Comment = require("../models/Comment.model");
 const Attachment = require("../models/Attachment.model");
+const TicketActivity = require("../models/TicketActivity.model");
 const { Op } = require("sequelize");
 
 const uploadAttachment = async (req, res) => {
@@ -63,6 +64,15 @@ const uploadAttachment = async (req, res) => {
 
       uploadedRecords.push(attachment); // push to array
     }
+    // find all activity
+    const allActitivity = await Attachment.findAll({});
+    const attivity = await TicketActivity.create({
+      ticketId: ticket.id,
+      userId: userId,
+      type: "attachment",
+      message: "Uploaded a new attachment",
+      attachmentId: allActitivity.id,
+    });
 
     // Return success message
     return res.status(201).json({
@@ -71,6 +81,7 @@ const uploadAttachment = async (req, res) => {
         ? "Attachments uploaded successfully"
         : "No attachments uploaded, but request processed.",
       attachments: uploadedRecords,
+      attivity: attivity,
     });
   } catch (error) {
     console.error("Attachment upload error:", error);

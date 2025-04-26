@@ -13,7 +13,7 @@ const TicketActivity = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: "ticket",
+        model: "tickets",
         key: "id",
       },
       onDelete: "CASCADE",
@@ -22,7 +22,7 @@ const TicketActivity = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: true, // Sometimes system generated, no user
       references: {
-        model: "user",
+        model: "users",
         key: "id",
       },
       onDelete: "CASCADE",

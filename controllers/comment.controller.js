@@ -1,6 +1,7 @@
 const Ticket = require("../models/Ticket.model");
 const User = require("../models/User.model");
 const Comment = require("../models/Comment.model");
+const TicketActivity = require("../models/TicketActivity.model");
 
 const createCommet = async (req, res) => {
   try {
@@ -36,12 +37,22 @@ const createCommet = async (req, res) => {
     // save
     await newComment.save();
 
+    // add activity
+    const activity = await TicketActivity.create({
+      ticketId,
+      commentId: newComment.id,
+      userId: userId.id,
+      type: "comment",
+      message: `Commented: ${comment}`,
+    });
+
     return res.status(201).json({
       success: true,
       message: comment
         ? "Comment added successfully"
         : "Empty comment recorded (optional)",
       comment: newComment,
+      activity :  activity
     });
   } catch (error) {
     console.log(error);

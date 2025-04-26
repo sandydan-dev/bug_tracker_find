@@ -1,6 +1,7 @@
 const Ticket = require("../models/Ticket.model");
-22;
 const User = require("../models/User.model");
+
+const TicketActivity = require("../models/TicketActivity.model");
 
 const createTicket = async (req, res) => {
   try {
@@ -36,6 +37,14 @@ const createTicket = async (req, res) => {
       createdBy,
       assignedTo: null,
     });
+
+    await TicketActivity.create({
+      ticketId: ticket.id, // ticket id
+      userId: createdBy,
+      type: "creation",
+      message: "Ticket created by user",
+    });
+
 
     res.status(201).json({
       success: true,
@@ -141,6 +150,7 @@ const updateTicket = async (req, res) => {
   try {
     const id = req.params.id;
     const updataTicket = req.body;
+    const userId = req.user.id;
 
     const ticketId = await Ticket.findByPk(id);
 
@@ -157,10 +167,18 @@ const updateTicket = async (req, res) => {
       },
     });
 
+   const activity = await TicketActivity.create({
+      ticketId: ticketId.id,
+      userId: userId,
+      type: "status_change",
+      message: `Status changed to ${ticketId.status}`,
+    });
+
     res.status(200).json({
       success: true,
       message: "Ticket updated successfully",
       ticket,
+      activity
     });
   } catch (error) {
     res.status(500).json({
