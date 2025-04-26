@@ -81,8 +81,87 @@ const uploadAttachment = async (req, res) => {
   }
 };
 
-// delete attachement by id
+// get all the attachements
+const getAttachments = async (req, res) => {
+  try {
+    const attachments = await Attachment.findAll();
 
+    if (attachments.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "No attachments found",
+      });
+    }
+    return res.status(200).json(attachments);
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ message: "Error while getting attachments", error });
+  }
+};
+
+// get all attachements by ticket id and the comment id automatic
+const getAttachmentsByTicketId = async (req, res) => {
+  try {
+    const attachements = await Attachment.findAll({
+      where: {
+        ticketId: req.params.ticketId,
+        commentId: req.params.commentId,
+      },
+    });
+    // get all tickets
+    const tickets = await Ticket.findAll();
+
+    if (tickets.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "No tickets found",
+      });
+    }
+
+    const comments = await Comment.findAll();
+    if (comments.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "No comments found",
+      });
+    }
+
+    // find the ticket by id and comment id from the attachemets table
+
+    const attachmentRecords = [];
+
+    for (let i = 0; i < attachements.length; i++) {
+      // first ticketid find then comment id find
+      const ticket = await Ticket.findByPk(attachements[i].ticketId);
+      const comment = await Comment.findByPk(attachements[i].commentId);
+
+      if (!ticket || !comment) {
+        return res.status(404).json({
+          success: false,
+          message: "Ticket or comment not found",
+        });
+      }
+
+      attachmentRecords.push({
+        ticket: ticket,
+        comment: comment,
+      });
+    }
+
+    return res
+      .status(200)
+      .json({ success: true, message: "Attachments found", attachmentRecords });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ message: "Error while getting attachments", error });
+  }
+};
+
+// delete attachement by id
 const deleteAttachment = async (req, res) => {
   try {
     const attachmentId = req.params.attachmentId;
@@ -102,4 +181,9 @@ const deleteAttachment = async (req, res) => {
   }
 };
 
-module.exports = { uploadAttachment, deleteAttachment };
+module.exports = {
+  uploadAttachment,
+  deleteAttachment,
+  getAttachments,
+  getAttachmentsByTicketId,
+};

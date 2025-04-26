@@ -14,6 +14,9 @@ const uploadFiles = upload.array("files", 10); // limit to 5 files
 const {
   uploadAttachment,
   deleteAttachment,
+  getAttachments,
+  getAttachmentsByTicketId
+
 } = require("../controllers/attachment.controller");
 
 // routes
@@ -37,5 +40,15 @@ router.delete(
   authorizeRoles(["developer", "admin", "qa", "tester", "manager"]),
   deleteAttachment
 );
+
+//todo: get all attachments
+//enpoint: http://localhost:5000/api/v1/attachment/data
+router.get("/data", verifyToken, rateLimiter, getAttachments);
+
+
+//todo: get attachments by ticket id and the comment id
+//enpoint: http://localhost:5000/api/v1/attachment/data/:ticketId/:commentId
+router.get("/data/:ticketId/:commentId", verifyToken, rateLimiter, getAttachmentsByTicketId);
+
 
 module.exports = router;

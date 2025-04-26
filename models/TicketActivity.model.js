@@ -6,58 +6,50 @@ const TicketActivity = sequelize.define(
   {
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true, //  not null, unique constraint
+      primaryKey: true,
       autoIncrement: true,
-    },
-    activity: {
-      type: DataTypes.STRING,
-      allowNull: false, // not null constraint
-      validate: {
-        notEmpty: {
-          msg: "Activity is required field",
-        },
-      },
     },
     ticketId: {
       type: DataTypes.INTEGER,
+      allowNull: false,
       references: {
         model: "ticket",
         key: "id",
       },
       onDelete: "CASCADE",
-      onUpdate: "CASCADE",
     },
     userId: {
       type: DataTypes.INTEGER,
+      allowNull: true, // Sometimes system generated, no user
       references: {
         model: "user",
         key: "id",
       },
       onDelete: "CASCADE",
-      onUpdate: "CASCADE",
     },
-
     type: {
       type: DataTypes.ENUM(
-        "creation", // when ticket is created
-        "comment", // when a comment is added
-        "status_change", // open → in_progress
-        "priority_change", // medium → high
-        "assignment_change", // assigned to someone
-        "attachment", // attachment added
-        "other" // fallback
+        "creation",
+        "comment",
+        "attachment",
+        "status_change",
+        "priority_change",
+        "assignment_change",
+        "other"
       ),
       allowNull: false,
     },
-    content: {
+    message: {
       type: DataTypes.STRING,
-      allowNull: false,
-      comment: "Main message like comment text or file name",
+      allowNull: true, // optional short message
     },
-    meta: {
-      type: DataTypes.JSON,
-      allowNull: true,
-      comment: "Optional details like old/new status, assignment details, etc.",
+    commentId: {
+      type: DataTypes.INTEGER,
+      allowNull: true, // if related to a comment
+    },
+    attachmentId: {
+      type: DataTypes.INTEGER,
+      allowNull: true, // if related to an attachment
     },
   },
   {
