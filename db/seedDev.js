@@ -5,6 +5,7 @@ const User = require("../models/User.model"); // user model
 const Ticket = require("../models/Ticket.model"); // ticket model
 const TicketAssignment = require("../models/TicketAssignment.model"); // ticket assignment model
 const Comment = require("../models/Comment.model");
+const Attachment = require("../models/Attachment.model");
 
 // dummy data for models
 const userData = [
@@ -52,8 +53,11 @@ const seedDev = async () => {
     await TicketAssignment.sync({ force: false }); // true : drop the table if it already exists
     console.log("TicketAssignment table created successfully...");
 
-    await Comment.sync({ force: true }); // true : drop the table if it already exists
+    await Comment.sync({ force: false }); // true : drop the table if it already exists
     console.log("Comment table created successfully...");
+
+    await Attachment.sync({ force: true }); // true : drop the table if it already exists
+    console.log("Attachment table created successfully...");
     process.exit(0); // exit the process
   } catch (error) {
     console.log(error);

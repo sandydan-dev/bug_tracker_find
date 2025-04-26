@@ -12,11 +12,11 @@ const Attachment = sequelize.define(
     url: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        isUrl: {
-          msg: "Must be a valid URL",
-        },
-      },
+      // validate: {
+      //   isUrl: {
+      //     msg: "Must be a valid URL",
+      //   },
+      // },
     },
     fileName: {
       type: DataTypes.STRING,
@@ -27,19 +27,10 @@ const Attachment = sequelize.define(
         },
       },
     },
-    fileType: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: {
-          msg: "File type is required field",
-        },
-      },
-    },
     ticketId: {
       type: DataTypes.INTEGER,
       references: {
-        model: "ticket",
+        model: "tickets",
         key: "id",
       },
       onDelete: "CASCADE",
@@ -48,7 +39,7 @@ const Attachment = sequelize.define(
     commentId: {
       type: DataTypes.INTEGER,
       references: {
-        model: "comment",
+        model: "comments",
         key: "id",
       },
       onDelete: "CASCADE",
@@ -57,7 +48,7 @@ const Attachment = sequelize.define(
     uploadedBy: {
       type: DataTypes.INTEGER,
       references: {
-        model: "user",
+        model: "users",
         key: "id",
       },
       onDelete: "CASCADE",
