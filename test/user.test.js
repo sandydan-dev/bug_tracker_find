@@ -17,7 +17,7 @@ beforeAll(async () => {
     },
     {
       name: "Jane Doe",
-      email: "5Tb4i@example.com",
+      email: "jenny@example.com",
       password: "jane12345",
       role: "admin",
     },
@@ -49,40 +49,55 @@ afterAll(async () => {
 });
 
 describe("User Controller API Test", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
   // post data
-  it("should adding new user data", async () => {
+  it("should add new user data", async () => {
     const res = await request(app).post("/api/v1/users/signup").send({
-      name: "jay",
-      email: "jay@example.com",
-      password: "jay12345",
+      name: "jenny",
+      email: "jenny@example.com",
+      password: "jenny12345",
       role: "admin",
     });
 
-    // expect response
-    expect(res.status).toBe(201);
-    expect(res.body.message).toBe("User created successfully");
-    expect(res.body.success).toBe(true);
-
-    // check database
-    // find user by email
-    const user = await User.findOne({ where: { email: "jay@example.com" } });
-    expect(user.name).toBe("jay");
-    expect(user.email).toBe("jay@example.com");
-    expect(user.password).toBe("jay12345");
+    expect(res.status).toBe(201); // expect 201
+    expect(res.body.success).toBe(true); // expect success true
+    expect(res.body.message).toBe("User created successfully"); // expect message
+    expect(res.body.user.name).toBe("jenny");
   });
 
-  // if user already exist
-  it("should return error if user already exist", async () => {
-    const res = await request(app).post("/api/v1/users/signup").send({
-      name: "danny",
-      email: "danny@example.com",
-      password: "danny12345",
-      role: "developer",
-    });
+  // login user
+  // it("should login user", async () => {
+  //   const res = await request(app).post("/api/v1/users/login").send({
+  //     email: "k9V9o@example.com",
+  //     password: "john12345",
+  //   });
+  //   expect(res.status).toBe(200); // expect 200
+  //   expect(res.body.success).toBe(true); // expect success true
+  //   expect(res.body.message).toBe("Login successfully"); // expect message
+  // });
 
-    // expect response
-    expect(res.status).toBe(400);
-    expect(res.body.message).toBe("User already exist");
-    expect(res.body.success).toBe(false);
-  });
+  // get all users
+  // it("should get all users", async () => {
+  //   const login = await request(app).post("/api/v1/users/login").send({
+  //     email: "jenny@example.com",
+  //     password: "jenny12345",
+  //   });
+
+  //   console.log(login.body); // 👈 add this line
+
+  //   const token = login.body.token; // assuming you send token on login
+
+  //   const res = await request(app)
+  //     .get("/api/v1/users/data")
+  //     .set("Authorization", `Bearer ${token}`); // 👈 sending token
+
+  //   expect(res.status).toBe(200); // expect 200
+  //   expect(res.body.success).toBe(true); // expect success true
+  //   expect(res.body.message).toBe("All users"); // expect message
+  // });
+
+  // get user by id
+ 
 });

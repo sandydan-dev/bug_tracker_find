@@ -60,7 +60,7 @@ const seedDev = async () => {
     await Attachment.sync({ force: false }); // true : drop the table if it already exists
     console.log("Attachment table created successfully...");
 
-    await TicketActivity.sync({ force: true }); // true : drop the table if it already exists
+    await TicketActivity.sync({ force: false }); // true : drop the table if it already exists
     console.log("TicketActivity table created successfully...");
 
     process.exit(0); // exit the process

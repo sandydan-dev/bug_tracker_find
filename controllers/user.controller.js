@@ -31,8 +31,6 @@ const signup = async (req, res) => {
       });
     }
 
-    // save user
-
     // create user
     const newUser = await User.create({
       name,
@@ -41,7 +39,7 @@ const signup = async (req, res) => {
       role,
     });
 
-    res.status(201).json({
+    return res.status(201).json({
       success: true,
       message: "User created successfully",
       user: newUser,
@@ -105,7 +103,7 @@ const login = async (req, res) => {
     res.setHeader("Authorization", `Bearer ${token}`);
 
     // login success
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "Login successfully",
       loggedInUser: user,
@@ -132,13 +130,13 @@ const getAllUsers = async (req, res) => {
       });
     }
 
-    res.status(200).json({
+   return res.status(200).json({
       success: true,
       message: "All users",
       users: user,
     });
   } catch (error) {
-    res.status(500).json({
+   return  res.status(500).json({
       success: false,
       message: "Error while getting all users",
       error: error.message,
@@ -160,13 +158,13 @@ const getUserById = async (req, res) => {
       });
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "User found",
       user: user,
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Error while getting user by id",
       error: error.message,

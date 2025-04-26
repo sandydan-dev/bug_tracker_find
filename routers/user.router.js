@@ -6,6 +6,8 @@ const { rateLimiter } = require("../middlewares/rateLimit.middleware");
 const { authorizeRoles } = require("../middlewares/role.middleware");
 const { verifyToken } = require("../middlewares/jwt.token");
 
+const asyncHandler = require("../helplers/asyncHandler")
+
 // controllers
 const {
   signup,
@@ -21,19 +23,19 @@ const {
 // routes
 //todo: signup
 //enpoint: http://localhost:5000/api/v1/users/signup
-router.post("/signup", signup);
+router.post("/signup", asyncHandler(signup));
 
 //todo: login
 //enpoint: http://localhost:5000/api/v1/users/login
-router.post("/login", rateLimiter, login);
+router.post("/login", rateLimiter, asyncHandler(login));
 
 //todo: get all users
 //enpoint: http://localhost:5000/api/v1/users/data
-router.get("/data", verifyToken, authorizeRoles("admin"), getAllUsers);
+router.get("/data", verifyToken, authorizeRoles("admin"), asyncHandler(getAllUsers));
 
 // todo: get user by id
 // enpoint: http://localhost:5000/api/v1/users/data/:id
-router.get("/data/:id", verifyToken, authorizeRoles("admin"), getUserById);
+router.get("/data/:id", verifyToken, authorizeRoles("admin"), asyncHandler(getUserById));
 
 // todo: update user
 // enpoint: http://localhost:5000/api/v1/users/data/:id
