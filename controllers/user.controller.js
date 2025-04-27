@@ -130,13 +130,13 @@ const getAllUsers = async (req, res) => {
       });
     }
 
-   return res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "All users",
       users: user,
     });
   } catch (error) {
-   return  res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Error while getting all users",
       error: error.message,
@@ -250,7 +250,7 @@ const findUserByName = async (req, res) => {
 
     const user = await User.findOne({
       // case insensitive
-      where: { name },
+      where: { name: name },
     });
 
     if (!user) {

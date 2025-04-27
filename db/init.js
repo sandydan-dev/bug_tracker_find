@@ -9,7 +9,7 @@ dotenv.config({
 const sequelize = new Sequelize({
   dialect: process.env.DB_DIALECT, // "sqlite" database type in this case
   storage: path.resolve(__dirname, process.env.DB_STORAGE),
-  logging: process.env.NODE_ENV !== "test", // enable logging only in non-test environments
+  // logging: process.env.NODE_ENV !== "test", // enable logging only in non-test environments
 });
 
 const connectDB = async () => {
