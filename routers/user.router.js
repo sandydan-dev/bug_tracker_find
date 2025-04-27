@@ -62,7 +62,7 @@ router.delete("/delete/:id", verifyToken, deleteUser);
 
 // todo: find user by name
 // enpoint: http://localhost:5000/api/v1/users/find/:name
-router.get("/find/:name", rateLimiter, verifyToken, findUserByName);
+router.get("/find/:name", verifyToken, findUserByName);
 
 // todo: sort users
 // enpoint: http://localhost:5000/api/v1/users/sort/:order

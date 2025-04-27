@@ -63,9 +63,11 @@ describe("user api test", () => {
     expect(response.body.user.email).toBe("jenny@example.com");
     expect(response.body.user.role).toBe("developer");
 
-     // Add a check to make sure the user exists in the database
-   const createdUser = await User.findOne({ where: { email: "jenny@example.com" } });
-   expect(createdUser).toBeDefined();
+    // Add a check to make sure the user exists in the database
+    const createdUser = await User.findOne({
+      where: { email: "jenny@example.com" },
+    });
+    expect(createdUser).toBeDefined();
   });
 
   // login existing user
@@ -147,39 +149,41 @@ describe("user api test", () => {
     const token = loginUser.body.token; // Assuming your login returns a token
 
     const response = await request(app)
-      .delete("/api/v1/users/delete/6")
+      .delete("/api/v1/users/delete/1")
       .set("Authorization", `Bearer ${token}`);
     expect(response.status).toBe(200);
     expect(response.body.success).toBe(true);
   });
 
   // find user by name
-//   it("should find user by name", async () => {
-//     // login user
-//     const loginUser = await request(app).post("/api/v1/users/login").send({
-//         email: "jenny@example.com",
-//         password: "jenny12345",
-//     });
+  it("should find user by name", async () => {
+    // login user
+    const loginUser = await request(app).post("/api/v1/users/login").send({
+      email: "jenny@example.com",
+      password: "jenny12345",
+    });
 
-//     // Debugging: log the login response to inspect the error
-//     console.log("Login Response:", loginUser.body);
+    // Debugging: log the login response to inspect the error
+    console.log("Login Response:", loginUser.body);
 
-//     // Check if login was successful
-//     expect(loginUser.status).toBe(200);  // Ensure that the login is successful
-//     expect(loginUser.body.token).toBeDefined();  // Ensure the token is defined
+    // Check if login was successful
+    expect(loginUser.status).toBe(200); // Ensure that the login is successful
+    expect(loginUser.body.token).toBeDefined(); // Ensure the token is defined
 
-//     const token = loginUser.body.token; // Assuming your login returns a token
+    const token = loginUser.body.token; // Assuming your login returns a token
 
-//     // Make the request to find the user by name
-//     const response = await request(app)
-//         .get("/api/v1/users/find/jenny")
-//         .set("Authorization", `Bearer ${token}`);
+    // Make the request to find the user by name
+    const response = await request(app)
+      .get("/api/v1/users/find/jenny")
+      .set("Authorization", `Bearer ${token}`);
 
-//     // Check the find response
-//     console.log("Find User Response:", response.body);
+    // Check the find response
+    console.log("Find User Response:", response.body);
 
-//     expect(response.status).toBe(200);  // Ensure status is 200
-//     expect(response.body.success).toBe(true);  // Ensure the response has success
-//     expect(response.body.user.name).toBe("jenny");  // Ensure the correct user is returned
-// });
+    expect(response.status).toBe(200); // Ensure status is 200
+    expect(response.body.success).toBe(true); // Ensure the response has success
+    expect(response.body.user.name).toBe("jenny"); // Ensure the correct user is returned
   });
+});
+
+
